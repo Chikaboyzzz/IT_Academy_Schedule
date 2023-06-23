@@ -4,9 +4,16 @@ from rest_framework.generics import GenericAPIView, CreateAPIView
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.status import HTTP_404_NOT_FOUND, HTTP_200_OK
-from apps.users.serializers import UserLoginSerializer, UserCreateSerializer
-from apps.users.models import User
+from apps.users.serializers import UserLoginSerializer, UserCreateSerializer, LessonSerializer
+from apps.users.models import User, Lesson
 from rest_framework import response, status
+from rest_framework.generics import get_object_or_404
+from rest_framework import generics
+
+
+class LessonAPIList(generics.ListCreateAPIView):
+    queryset = Lesson.objects.all()
+    serializer_class = LessonSerializer
 
 
 class LoginAPIView(GenericAPIView):

@@ -1,28 +1,36 @@
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.min.js';
+
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
-const Schedule = () => {
-  const [schedule, setSchedule] = useState([]);
+function Schedule() {
+  const [myData, setMyData] = useState([]);
 
   useEffect(() => {
-    axios.get('/api/schedule/')
+    axios.get('http://127.0.0.1:8000/lesson/')
       .then(response => {
-        setSchedule(response.data);
+        setMyData(response.data);
       })
       .catch(error => {
-        console.error('Error fetching schedule:', error);
+        console.error('Error fetching lesson:', error);
       });
   }, []);
 
   return (
     <div>
-      <h2>Расписание</h2>
-      {schedule.map(item => (
-        <div key={item.id}>
-          <h3>{item.name}</h3>
-          <p>{item.time}</p>
+      <h1>Lesson</h1>
+      {myData.map((lesson) => {
+      const {id,date,group,mentor,viewer} = lesson;
+        return (
+        <div key={id}>
+          <p>Date: {date}</p>
+          <p>Group: {group.name}</p>
+          <p>Mentor: {mentor.name}</p>
+          <p>Viewer: {viewer.name}</p>
         </div>
-      ))}
+      );
+      })};
     </div>
   );
 };

@@ -1,6 +1,12 @@
 from rest_framework import serializers
 from rest_framework.fields import EmailField, CharField
-from apps.users.models import User, Group, Role
+from apps.users.models import User, Group, Role, Lesson
+
+
+class LessonSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Lesson
+        fields = ('group', 'mentor', 'viewer')
 
 
 class UserCreateSerializer(serializers.ModelSerializer):

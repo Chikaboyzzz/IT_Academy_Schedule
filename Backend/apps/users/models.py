@@ -58,3 +58,20 @@ class User(AbstractBaseUser, PermissionsMixin):
 def create_auth_token(sender, instance=None, created=False, **kwargs):
     if created:
         Token.objects.create(user=instance)
+
+
+class Lesson(models.Model):
+    date = models.DateField(verbose_name='Дата')
+    group = models.ForeignKey(Group, verbose_name='Группа', on_delete=models.CASCADE)
+    mentor = models.ForeignKey(User, verbose_name='Ментор', on_delete=models.CASCADE, related_name='mentor_lessons')
+    viewer = models.ForeignKey(User, verbose_name='Зритель', on_delete=models.CASCADE, related_name='viewer_lessons')
+
+    class Meta:
+        verbose_name = 'Занятие'
+        verbose_name_plural = 'Занятия'
+
+    def __str__(self):
+        return f'Занятие {self.id}'
+
+
+
